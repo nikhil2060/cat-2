@@ -1,24 +1,30 @@
-const bodyParser = require("body-parser");
-const express = require("express");
-const app = express();
-app.use(express.static("public"));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-var name;
-var pass;
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
+// functions/server.js
+module.exports = async (event, context) => {
+  const bodyParser = require("body-parser");
+  const express = require("express");
+  const app = express();
 
-app.post("/result", (req, res) => {
-  name = req.body.uname;
-  pass = req.body.psw;
+  // Your existing Express app code here
 
-  if (name == "23337249" && pass == "947242") {
-    res.sendFile(__dirname + "/result.pdf");
-  }
-});
+  app.use(express.static("public"));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
 
-app.listen(3000);
+  var name;
+  var pass;
 
-module.exports = app;
+  app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/index.html");
+  });
+
+  app.post("/result", (req, res) => {
+    name = req.body.uname;
+    pass = req.body.psw;
+
+    if (name == "23337249" && pass == "947242") {
+      res.sendFile(__dirname + "/result.pdf");
+    }
+  });
+
+  app.listen((context.callbackWaitsForEmptyEventLoop = false));
+};
